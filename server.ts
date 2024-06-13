@@ -5,6 +5,8 @@ import logger from './utils/logger'
 import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
 import expressFileUpload from 'express-fileupload'
+import adminRouter from './src/api/v1/admin/routes'
+import NotFoundError from './utils/errors/404notFound'
 class Server{
     public app=express()
     public port?:Number
@@ -75,7 +77,11 @@ class Server{
       }
 
       public async router(){
-
+        this.app.use("/api/v1/admin",adminRouter)
+        this.app.all('*', async (request, response, next) => {
+          logger?.info(request.url)
+          throw new NotFoundError()
+        })
       }
 
       public async start(port:number){

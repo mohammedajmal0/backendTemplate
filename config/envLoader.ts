@@ -4,7 +4,8 @@ dotenv.config()
 const ENV=[
     "PORT",
     "DB_NAME",
-    "DB_URL"
+    "DB_URL",
+    "JWT_SECRET"
 ] as const
 
 const loadVar=(env:readonly String[]):Record<string,string> =>{
